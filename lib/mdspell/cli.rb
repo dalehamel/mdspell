@@ -36,15 +36,8 @@ module MdSpell
       raise ArgumentError, 'expected Array of command line options' unless options.is_a? Array
 
       parse_options(options)
-
-      # Load optional config file if it's present.
-      if config[:config_file]
-        config_filename = File.expand_path(config[:config_file])
-        MdSpell::Configuration.from_file(config_filename) if File.exist?(config_filename)
-      end
-
-      # Store command line configuration options.
-      MdSpell::Configuration.merge!(config)
+      MdSpell::Configuration.reset
+      MdSpell::Configuration.load!(config)
     end
 
     # List of markdown files from argument list.
